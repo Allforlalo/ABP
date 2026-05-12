@@ -80,7 +80,7 @@
     </nav>
 
     <main class="container my-5 flex-grow-1">
-        @if(session('success'
+        @if(session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
