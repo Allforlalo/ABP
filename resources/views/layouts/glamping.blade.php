@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PonteGlamping</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
 
@@ -80,7 +81,15 @@
 
     <main class="container my-5 flex-grow-1">
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: "{{ session('success') }}",
+                    icon: "success",
+                    draggable: true
+                });
+            });
+        </script>
         @endif
         @if(session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
