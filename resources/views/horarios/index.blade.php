@@ -27,7 +27,7 @@
                                     <td>{{ $horario->hora_salida }}</td>
                                     <td>
                                         <a class="btn btn-warning px-3" href="{{ route('horarios.edit', $horario->id_horario) }}">Editar</a>
-                                        <form action="{{ route('horarios.destroy', $horario->id_horario) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar?')">
+                                        <form action="{{ route('horarios.destroy', $horario->id_horario) }}" method="POST" style="display:inline;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger px-3">Eliminar</button>

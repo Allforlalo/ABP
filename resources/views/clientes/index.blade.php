@@ -31,7 +31,7 @@
                                     <td>{{ $cliente->ine }}</td>
                                     <td>
                                         <a class="btn btn-warning px-3" href="{{ route('clientes.edit', $cliente->id_cliente) }}">Editar</a>
-                                        <form action="{{ route('clientes.destroy', $cliente->id_cliente) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar?')">
+                                        <form action="{{ route('clientes.destroy', $cliente->id_cliente) }}" method="POST" style="display:inline;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger px-3">Eliminar</button>

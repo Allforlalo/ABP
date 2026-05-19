@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PublicController extends Controller
@@ -19,13 +18,7 @@ class PublicController extends Controller
             ->limit(4)
             ->get();
 
-        $clientes = DB::connection('glamping')
-            ->table('clientes')
-            ->join('personas', 'clientes.id_persona', '=', 'personas.id_persona')
-            ->select('clientes.id_cliente', 'personas.nombre', 'personas.apellido_paterno')
-            ->get();
-
-        return view('inicio', compact('populares', 'clientes'));
+        return view('inicio', compact('populares'));
     }
 
     public function menu()
@@ -36,28 +29,6 @@ class PublicController extends Controller
             ->groupBy('categoria');
 
         return view('menu', compact('productos'));
-    }
-
-    public function misPedidos(Request $request)
-    {
-        $id_cliente = $request->id_cliente;
-
-        $cliente = DB::connection('glamping')
-            ->table('clientes')
-            ->join('personas', 'clientes.id_persona', '=', 'personas.id_persona')
-            ->where('clientes.id_cliente', $id_cliente)
-            ->select('personas.nombre', 'personas.apellido_paterno')
-            ->first();
-
-        $pedidos = DB::connection('glamping')
-            ->table('detalles_pedido')
-            ->join('pedidos', 'detalles_pedido.id_pedido', '=', 'pedidos.id_pedido')
-            ->join('productos', 'detalles_pedido.id_producto', '=', 'productos.id_producto')
-            ->where('pedidos.id_cliente', $id_cliente)
-            ->select('pedidos.fecha_hora', 'productos.nombre', 'productos.precio', 'detalles_pedido.cantidad')
-            ->get();
-
-        return view('mis-pedidos', compact('cliente', 'pedidos'));
     }
 
     public function instalaciones()

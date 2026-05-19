@@ -29,7 +29,7 @@
                                     <td>{{ $pedido->fecha_hora }}</td>
                                     <td>
                                         <a class="btn btn-warning px-3" href="{{ route('pedidos.edit', $pedido->id_pedido) }}">Editar</a>
-                                        <form action="{{ route('pedidos.destroy', $pedido->id_pedido) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar?')">
+                                        <form action="{{ route('pedidos.destroy', $pedido->id_pedido) }}" method="POST" style="display:inline;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger px-3">Eliminar</button>

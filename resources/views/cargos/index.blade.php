@@ -25,7 +25,7 @@
                                     <td>{{ $cargo->nombre }}</td>
                                     <td>
                                         <a class="btn btn-warning px-3" href="{{ route('cargos.edit', $cargo->id_cargo) }}">Editar</a>
-                                        <form action="{{ route('cargos.destroy', $cargo->id_cargo) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar?')">
+                                        <form action="{{ route('cargos.destroy', $cargo->id_cargo) }}" method="POST" style="display:inline;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger px-3">Eliminar</button>

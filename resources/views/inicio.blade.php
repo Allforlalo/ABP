@@ -6,26 +6,10 @@
     <div class="container py-4">
         <h1 class="display-4 fw-bold">Bienvenido a <span class="text-warning">PonteGlamping</span></h1>
         <p class="lead mb-4">Gastronomía local, tradición y sabor en cada platillo — Glamping Valle, Valle de Bravo.</p>
-        <a href="#" class="btn btn-warning btn-lg fw-bold">Hacer pedido</a>
+        <a href="{{ route('detalles_pedido.create') }}" class="btn btn-warning btn-lg fw-bold">Hacer pedido</a>
     </div>
 </header>
 
-@if($clientes->isNotEmpty())
-<div class="border-top border-warning border-4">
-    <div class="container py-4">
-        <h5 class="fw-bold text-center mb-3">Ver mis <span class="text-warning">pedidos</span></h5>
-        <form action="{{ route('mis-pedidos') }}" method="GET" class="d-flex justify-content-center gap-2">
-            <select name="id_cliente" class="form-select w-auto">
-                <option value="">Seleccionar cliente</option>
-                @foreach($clientes as $cliente)
-                    <option value="{{ $cliente->id_cliente }}">{{ $cliente->nombre }} {{ $cliente->apellido_paterno }}</option>
-                @endforeach
-            </select>
-            <button type="submit" class="btn btn-warning fw-bold">Ver pedidos</button>
-        </form>
-    </div>
-</div>
-@endif
 
 @if($populares->isNotEmpty())
 <div class="container py-5">

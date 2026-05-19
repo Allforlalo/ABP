@@ -31,7 +31,7 @@
                                     <td>{{ $tarjeta->banco }}</td>
                                     <td>
                                         <a class="btn btn-warning px-3" href="{{ route('tarjetas.edit', $tarjeta->id_tarjeta) }}">Editar</a>
-                                        <form action="{{ route('tarjetas.destroy', $tarjeta->id_tarjeta) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar?')">
+                                        <form action="{{ route('tarjetas.destroy', $tarjeta->id_tarjeta) }}" method="POST" style="display:inline;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger px-3">Eliminar</button>

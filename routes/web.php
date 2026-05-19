@@ -21,7 +21,6 @@ use App\Http\Controllers\UserController;
 Route::get('/', [PublicController::class, 'inicio'])->name('home');
 Route::get('/menu', [PublicController::class, 'menu'])->name('menu');
 Route::get('/instalaciones', [PublicController::class, 'instalaciones'])->name('instalaciones');
-Route::get('/mis-pedidos', [PublicController::class, 'misPedidos'])->name('mis-pedidos');
 
 // Auth
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
@@ -49,5 +48,7 @@ Route::middleware(['auth', 'empleado'])->group(function () {
     Route::resource('clientes', ClienteController::class);
     Route::resource('productos', ProductoController::class);
     Route::resource('pedidos', PedidoController::class);
-    Route::resource('detalles_pedido', DetallePedidoController::class);
 });
+
+// Público — clientes pueden crear pedidos sin login
+Route::resource('detalles_pedido', DetallePedidoController::class);

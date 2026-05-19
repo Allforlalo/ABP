@@ -33,7 +33,7 @@
                                     <td>{{ $empleado->hora_salida }}</td>
                                     <td>
                                         <a class="btn btn-warning px-3" href="{{ route('empleados.edit', $empleado->id_empleado) }}">Editar</a>
-                                        <form action="{{ route('empleados.destroy', $empleado->id_empleado) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar?')">
+                                        <form action="{{ route('empleados.destroy', $empleado->id_empleado) }}" method="POST" style="display:inline;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger px-3">Eliminar</button>
