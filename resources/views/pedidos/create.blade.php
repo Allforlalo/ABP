@@ -27,7 +27,7 @@
                                 <option value="">Seleccionar cliente</option>
                                 @foreach($clientes as $cliente)
                                     <option value="{{ $cliente->id_cliente }}" {{ old('id_cliente') == $cliente->id_cliente ? 'selected' : '' }}>
-                                        {{ $cliente->persona->nombre ?? '' }} {{ $cliente->persona->apellido_paterno ?? '' }}
+                                        {{ $cliente->nombre }} {{ $cliente->apellido_paterno }}
                                     </option>
                                 @endforeach
                             </select>
@@ -38,7 +38,7 @@
                                 <option value="">Seleccionar empleado</option>
                                 @foreach($empleados as $empleado)
                                     <option value="{{ $empleado->id_empleado }}" {{ old('id_empleado') == $empleado->id_empleado ? 'selected' : '' }}>
-                                        {{ $empleado->persona->nombre ?? '' }} {{ $empleado->persona->apellido_paterno ?? '' }}
+                                        {{ $empleado->nombre }} {{ $empleado->apellido_paterno }}
                                     </option>
                                 @endforeach
                             </select>

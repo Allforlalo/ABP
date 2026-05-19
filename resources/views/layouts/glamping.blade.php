@@ -102,24 +102,38 @@
             <p class="mb-1">Glamping Valle - San Antonio 103, Valle de Bravo.</p>
         </div>
     </footer>
-
-
+    
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success ms-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
         document.querySelectorAll('.delete-form').forEach(function (form) {
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
-                Swal.fire({
+                swalWithBootstrapButtons.fire({
                     title: '¿Estás seguro?',
                     text: 'Esta acción no se puede deshacer.',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
                     confirmButtonText: 'Sí, eliminar',
-                    cancelButtonText: 'Cancelar'
+                    cancelButtonText: 'No, cancelar',
+                    reverseButtons: true
                 }).then((result) => {
-                    if (result.isConfirmed) form.submit();
+                    if (result.isConfirmed) {
+                        form.submit();
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        swalWithBootstrapButtons.fire({
+                            title: 'Cancelado',
+                            text: 'El registro no fue eliminado.',
+                            icon: 'error'
+                        });
+                    }
                 });
             });
         });
