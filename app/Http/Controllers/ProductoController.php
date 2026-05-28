@@ -61,7 +61,11 @@ class ProductoController extends Controller
     public function destroy(string $id)
     {
         $producto = Producto::findOrFail($id);
-        $producto->delete();
-        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente');
+        try {
+            $producto->delete();
+            return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('productos.index')->with('error', 'No se puede eliminar: el producto tiene detalles de pedido asociados.');
+        }
     }
 }

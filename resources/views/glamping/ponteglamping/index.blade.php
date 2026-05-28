@@ -23,7 +23,7 @@
                 <td>{{ $item->id_venta }}</td>
                 <td>
                     <a href="{{ route('ponteglamping.edit', $item->glamping) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('ponteglamping.destroy', $item->glamping) }}" method="POST" style="display:inline">
+                    <form novalidate action="{{ route('ponteglamping.destroy', $item->glamping) }}" method="POST" style="display:inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>

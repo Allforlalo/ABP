@@ -21,7 +21,7 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nombre' => 'required|string|max:50|unique:glamping.categorias,nombre',
+            'nombre' => 'required|string|max:50|unique:glamping.categorias,nombre|regex:/^[\pL\s]+$/u',
         ]);
         Categoria::create($validated);
         return redirect()->route('categorias.index')->with('success', 'Categoría creada correctamente');
@@ -43,7 +43,7 @@ class CategoriaController extends Controller
     {
         $categoria = Categoria::findOrFail($id);
         $validated = $request->validate([
-            'nombre' => 'required|string|max:50|unique:glamping.categorias,nombre,' . $id . ',id_categoria',
+            'nombre' => 'required|string|max:50|unique:glamping.categorias,nombre,' . $id . ',id_categoria|regex:/^[\pL\s]+$/u',
         ]);
         $categoria->update($validated);
         return redirect()->route('categorias.index')->with('success', 'Categoría actualizada correctamente');
@@ -52,7 +52,11 @@ class CategoriaController extends Controller
     public function destroy(string $id)
     {
         $categoria = Categoria::findOrFail($id);
-        $categoria->delete();
-        return redirect()->route('categorias.index')->with('success', 'Categoría eliminada correctamente');
+        try {
+            $categoria->delete();
+            return redirect()->route('categorias.index')->with('success', 'Categoría eliminada correctamente');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('categorias.index')->with('error', 'No se puede eliminar: hay productos asociados a esta categoría.');
+        }
     }
 }

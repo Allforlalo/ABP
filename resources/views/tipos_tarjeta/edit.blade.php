@@ -1,4 +1,4 @@
-﻿@extends('layouts.glamping')
+@extends('layouts.glamping')
 
 @section('content')
 <div class="container mt-5">
@@ -9,22 +9,13 @@
                     <h4 class="mb-0">Editar Tipo de Tarjeta</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('tipos_tarjeta.update', $tipoTarjeta->id_tipo) }}" method="POST">
+                    <form novalidate action="{{ route('tipos_tarjeta.update', $tipoTarjeta->id_tipo) }}" method="POST" class="edit-form">
                         @csrf
                         @method('PUT')
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                         <div class="mb-3">
                             <label for="tipo" class="form-label">Tipo</label>
-                            <input type="text" class="form-control" id="tipo" name="tipo" value="{{ old('tipo', $tipoTarjeta->tipo) }}">
+                            <input type="text" class="form-control" id="tipo" name="tipo" pattern="[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+" title="Solo letras y espacios" value="{{ old('tipo', $tipoTarjeta->tipo) }}">
                         </div>
                         <div class="d-flex justify-content-between mt-3">
                             <a href="{{ route('tipos_tarjeta.index') }}" class="btn btn-secondary">Cancelar</a>

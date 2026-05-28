@@ -1,10 +1,10 @@
-﻿@extends('glamping.layout')
+@extends('glamping.layout')
 
 @section('content')
     <h2 class="mb-3">Editar Cargo</h2>
     <div class="card bg-dark text-white">
         <div class="card-body">
-            <form action="{{ route('cargos.update', $cargo->id_cargo) }}" method="POST">
+            <form novalidate action="{{ route('cargos.update', $cargo->id_cargo) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">

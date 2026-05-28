@@ -21,7 +21,7 @@
                 <td>{{ $instalacion->nombre }}</td>
                 <td>
                     <a href="{{ route('instalaciones.edit', $instalacion->id_instalacion) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('instalaciones.destroy', $instalacion->id_instalacion) }}" method="POST" style="display:inline">
+                    <form novalidate action="{{ route('instalaciones.destroy', $instalacion->id_instalacion) }}" method="POST" style="display:inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>

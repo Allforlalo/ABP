@@ -9,33 +9,25 @@
                     <h4 class="mb-0">Editar Detalle de Pedido</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('detalles_pedido.update', $detalle->id_detalle) }}" method="POST">
+                    <form novalidate action="{{ route('detalles_pedido.update', $detalle->id_detalle) }}" method="POST" class="edit-form">
                         @csrf
                         @method('PUT')
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+
                         <div class="mb-3">
-                            <label for="id_pedido" class="form-label">Pedido</label>
-                            <select class="form-select" id="id_pedido" name="id_pedido">
-                                <option value="">Seleccionar pedido</option>
-                                @foreach($pedidos as $pedido)
-                                    <option value="{{ $pedido->id_pedido }}" {{ old('id_pedido', $detalle->id_pedido) == $pedido->id_pedido ? 'selected' : '' }}>
-                                        #{{ $pedido->id_pedido }} &mdash; {{ $pedido->fecha_hora }}
+                            <label class="form-label">Cliente</label>
+                            <select class="form-select" name="id_cliente">
+                                <option value="">Seleccionar cliente</option>
+                                @foreach($clientes as $cliente)
+                                    <option value="{{ $cliente->id_cliente }}" {{ old('id_cliente', $detalle->id_cliente) == $cliente->id_cliente ? 'selected' : '' }}>
+                                        {{ $cliente->nombre }} {{ $cliente->apellido_paterno }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="id_producto" class="form-label">Producto</label>
-                            <select class="form-select" id="id_producto" name="id_producto">
+                            <label class="form-label">Producto</label>
+                            <select class="form-select" name="id_producto">
                                 <option value="">Seleccionar producto</option>
                                 @foreach($productos as $producto)
                                     <option value="{{ $producto->id_producto }}" {{ old('id_producto', $detalle->id_producto) == $producto->id_producto ? 'selected' : '' }}>
@@ -45,8 +37,8 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="cantidad" class="form-label">Cantidad</label>
-                            <input type="number" min="1" class="form-control" id="cantidad" name="cantidad" value="{{ old('cantidad', $detalle->cantidad) }}">
+                            <label class="form-label">Cantidad</label>
+                            <input type="number" min="1" max="999" class="form-control" name="cantidad" value="{{ old('cantidad', $detalle->cantidad) }}">
                         </div>
                         <div class="d-flex justify-content-between mt-3">
                             <a href="{{ route('detalles_pedido.index') }}" class="btn btn-secondary">Cancelar</a>

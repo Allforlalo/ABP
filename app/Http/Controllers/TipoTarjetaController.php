@@ -21,7 +21,7 @@ class TipoTarjetaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'tipo' => 'required|string|max:100|unique:glamping.tipos_tarjeta,tipo',
+            'tipo' => 'required|string|max:100|unique:glamping.tipos_tarjeta,tipo|regex:/^[\pL\s]+$/u',
         ]);
         TipoTarjeta::create($validated);
         return redirect()->route('tipos_tarjeta.index')->with('success', 'Tipo de tarjeta creado correctamente');
@@ -43,7 +43,7 @@ class TipoTarjetaController extends Controller
     {
         $tipoTarjeta = TipoTarjeta::findOrFail($id);
         $validated = $request->validate([
-            'tipo' => 'required|string|max:100|unique:glamping.tipos_tarjeta,tipo,' . $id . ',id_tipo',
+            'tipo' => 'required|string|max:100|unique:glamping.tipos_tarjeta,tipo,' . $id . ',id_tipo|regex:/^[\pL\s]+$/u',
         ]);
         $tipoTarjeta->update($validated);
         return redirect()->route('tipos_tarjeta.index')->with('success', 'Tipo de tarjeta actualizado correctamente');
@@ -52,7 +52,11 @@ class TipoTarjetaController extends Controller
     public function destroy(string $id)
     {
         $tipoTarjeta = TipoTarjeta::findOrFail($id);
-        $tipoTarjeta->delete();
-        return redirect()->route('tipos_tarjeta.index')->with('success', 'Tipo de tarjeta eliminado correctamente');
+        try {
+            $tipoTarjeta->delete();
+            return redirect()->route('tipos_tarjeta.index')->with('success', 'Tipo de tarjeta eliminado correctamente');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('tipos_tarjeta.index')->with('error', 'No se puede eliminar: hay tarjetas de este tipo registradas.');
+        }
     }
 }

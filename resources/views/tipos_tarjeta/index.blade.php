@@ -25,7 +25,7 @@
                                     <td>{{ $tipo->tipo }}</td>
                                     <td>
                                         <a class="btn btn-warning px-3" href="{{ route('tipos_tarjeta.edit', $tipo->id_tipo) }}">Editar</a>
-                                        <form action="{{ route('tipos_tarjeta.destroy', $tipo->id_tipo) }}" method="POST" style="display:inline;" class="delete-form">
+                                        <form novalidate action="{{ route('tipos_tarjeta.destroy', $tipo->id_tipo) }}" method="POST" style="display:inline;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger px-3">Eliminar</button>

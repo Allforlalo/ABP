@@ -25,7 +25,7 @@
                 <td>{{ $pedidoPlatillo->id_venta }}</td>
                 <td>
                     <a href="{{ route('pedidos_platillos.edit', $pedidoPlatillo->id_pedido_platillo) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('pedidos_platillos.destroy', $pedidoPlatillo->id_pedido_platillo) }}" method="POST" style="display:inline">
+                    <form novalidate action="{{ route('pedidos_platillos.destroy', $pedidoPlatillo->id_pedido_platillo) }}" method="POST" style="display:inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>

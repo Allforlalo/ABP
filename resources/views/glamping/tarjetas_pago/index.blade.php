@@ -23,7 +23,7 @@
                 <td>{{ $tarjeta->tipo }}</td>
                 <td>
                     <a href="{{ route('tarjetas_pago.edit', $tarjeta->id_tarjeta) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('tarjetas_pago.destroy', $tarjeta->id_tarjeta) }}" method="POST" style="display:inline">
+                    <form novalidate action="{{ route('tarjetas_pago.destroy', $tarjeta->id_tarjeta) }}" method="POST" style="display:inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>

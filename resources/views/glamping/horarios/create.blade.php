@@ -1,10 +1,10 @@
-﻿@extends('glamping.layout')
+@extends('glamping.layout')
 
 @section('content')
     <h2 class="mb-3">Nuevo Horario</h2>
     <div class="card bg-dark text-white">
         <div class="card-body">
-            <form action="{{ route('horarios.store') }}" method="POST">
+            <form novalidate action="{{ route('horarios.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">Horario</label>

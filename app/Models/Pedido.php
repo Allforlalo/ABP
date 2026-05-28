@@ -10,5 +10,5 @@ class Pedido extends Model
     protected $table = 'pedidos';
     protected $primaryKey = 'id_pedido';
     public $timestamps = false;
-    protected $fillable = ['id_cliente', 'id_empleado', 'fecha_hora'];
+    protected $fillable = ['id_detalle', 'id_empleado', 'fecha_hora'];
 }

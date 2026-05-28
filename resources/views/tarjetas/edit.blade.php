@@ -9,26 +9,13 @@
                     <h4 class="mb-0">Editar Tarjeta</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('tarjetas.update', $tarjeta->id_tarjeta) }}" method="POST">
+                    <form novalidate action="{{ route('tarjetas.update', $tarjeta->id_tarjeta) }}" method="POST" class="edit-form">
                         @csrf
                         @method('PUT')
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                         <div class="mb-3">
-                            <label for="numero_tarjeta" class="form-label">Número de Tarjeta</label>
-                            <input type="text" class="form-control" id="numero_tarjeta" name="numero_tarjeta" value="{{ old('numero_tarjeta', $tarjeta->numero_tarjeta) }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_persona" class="form-label">Titular</label>
-                            <select class="form-select" id="id_persona" name="id_persona">
+                            <label class="form-label">Persona</label>
+                            <select class="form-select" name="id_persona">
                                 <option value="">Seleccionar persona</option>
                                 @foreach($personas as $persona)
                                     <option value="{{ $persona->id_persona }}" {{ old('id_persona', $tarjeta->id_persona) == $persona->id_persona ? 'selected' : '' }}>
@@ -36,6 +23,10 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Número de Tarjeta</label>
+                            <input type="text" class="form-control" name="numero_tarjeta" pattern="\d{13,19}" minlength="13" maxlength="19" inputmode="numeric" title="Solo dígitos, entre 13 y 19 caracteres" value="{{ old('numero_tarjeta', $tarjeta->numero_tarjeta) }}">
                         </div>
                         <div class="mb-3">
                             <label for="id_tipo" class="form-label">Tipo de Tarjeta</label>

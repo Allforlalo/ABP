@@ -22,7 +22,7 @@ class TarjetaController extends Controller
 
     public function create()
     {
-        $personas     = Persona::all();
+        $personas     = Persona::orderBy('apellido_paterno')->get();
         $tiposTarjeta = TipoTarjeta::all();
         $bancos       = Banco::all();
         return view('tarjetas.create', compact('personas', 'tiposTarjeta', 'bancos'));
@@ -31,13 +31,13 @@ class TarjetaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'numero_tarjeta' => 'required|string|max:50|unique:glamping.tarjetas,numero_tarjeta',
+            'numero_tarjeta' => 'required|digits_between:13,19|unique:glamping.tarjetas,numero_tarjeta',
             'id_persona'     => 'required|integer|exists:glamping.personas,id_persona',
             'id_tipo'        => 'required|integer|exists:glamping.tipos_tarjeta,id_tipo',
             'id_banco'       => 'required|integer|exists:glamping.bancos,id_banco',
         ]);
         Tarjeta::create($validated);
-        return redirect()->route('tarjetas.index')->with('success', 'Tarjeta creada correctamente');
+        return redirect()->route('tarjetas.index')->with('success', 'Tarjeta registrada correctamente');
     }
 
     public function show(string $id)
@@ -49,7 +49,7 @@ class TarjetaController extends Controller
     public function edit(string $id)
     {
         $tarjeta      = Tarjeta::findOrFail($id);
-        $personas     = Persona::all();
+        $personas     = Persona::orderBy('apellido_paterno')->get();
         $tiposTarjeta = TipoTarjeta::all();
         $bancos       = Banco::all();
         return view('tarjetas.edit', compact('tarjeta', 'personas', 'tiposTarjeta', 'bancos'));
@@ -59,7 +59,7 @@ class TarjetaController extends Controller
     {
         $tarjeta = Tarjeta::findOrFail($id);
         $validated = $request->validate([
-            'numero_tarjeta' => 'required|string|max:50|unique:glamping.tarjetas,numero_tarjeta,' . $id . ',id_tarjeta',
+            'numero_tarjeta' => 'required|digits_between:13,19|unique:glamping.tarjetas,numero_tarjeta,' . $id . ',id_tarjeta',
             'id_persona'     => 'required|integer|exists:glamping.personas,id_persona',
             'id_tipo'        => 'required|integer|exists:glamping.tipos_tarjeta,id_tipo',
             'id_banco'       => 'required|integer|exists:glamping.bancos,id_banco',

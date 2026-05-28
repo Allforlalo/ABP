@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\TarjetaController;
 use App\Http\Controllers\TipoTarjetaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MisPedidosController;
 
 // Públicas (clientes)
 Route::get('/', [PublicController::class, 'inicio'])->name('home');
@@ -43,12 +44,16 @@ Route::middleware(['auth', 'administrador'])->group(function () {
     Route::resource('usuarios', UserController::class);
 });
 
+// Público — cliente hace su pedido y ve sus pedidos acumulados
+Route::get('/mis-pedidos', [MisPedidosController::class, 'clienteView'])->name('mis_pedidos.cliente');
+Route::get('/detalles_pedido/create', [DetallePedidoController::class, 'create'])->name('detalles_pedido.create');
+Route::post('/detalles_pedido', [DetallePedidoController::class, 'store'])->name('detalles_pedido.store');
+
 // Administrador y empleado
 Route::middleware(['auth', 'empleado'])->group(function () {
     Route::resource('clientes', ClienteController::class);
     Route::resource('productos', ProductoController::class);
     Route::resource('pedidos', PedidoController::class);
+    Route::resource('detalles_pedido', DetallePedidoController::class)->except(['create', 'store']);
+    Route::get('/resumen-pedidos', [MisPedidosController::class, 'resumen'])->name('mis_pedidos.resumen');
 });
-
-// Público — clientes pueden crear pedidos sin login
-Route::resource('detalles_pedido', DetallePedidoController::class);

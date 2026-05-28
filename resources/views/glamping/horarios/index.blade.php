@@ -21,7 +21,7 @@
                 <td>{{ $horario->horario }}</td>
                 <td>
                     <a href="{{ route('horarios.edit', $horario->id_horario) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('horarios.destroy', $horario->id_horario) }}" method="POST" style="display:inline">
+                    <form novalidate action="{{ route('horarios.destroy', $horario->id_horario) }}" method="POST" style="display:inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>

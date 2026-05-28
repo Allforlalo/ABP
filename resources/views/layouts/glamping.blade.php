@@ -42,7 +42,8 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ route('productos.index') }}">Productos</a></li>
                                     <li><a class="dropdown-item" href="{{ route('pedidos.index') }}">Pedidos</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('detalles_pedido.index') }}">Detalles de pedido</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('detalles_pedido.index') }}">Detalles de Pedido</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('mis_pedidos.resumen') }}">Punto de Venta</a></li>
                                     <li><a class="dropdown-item" href="{{ route('tarjetas.index') }}">Tarjetas</a></li>
                                 </ul>
                             </li>
@@ -58,7 +59,8 @@
                                     <li><a class="dropdown-item" href="{{ route('clientes.index') }}">Clientes</a></li>
                                     <li><a class="dropdown-item" href="{{ route('productos.index') }}">Productos</a></li>
                                     <li><a class="dropdown-item" href="{{ route('pedidos.index') }}">Pedidos</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('detalles_pedido.index') }}">Detalles de pedido</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('detalles_pedido.index') }}">Detalles de Pedido</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('mis_pedidos.resumen') }}">Punto de Venta</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -69,7 +71,7 @@
                             <a class="btn btn-outline-warning fw-bold btn-sm" href="{{ route('dashboard') }}">Regresar</a>
                         @endif
                         <span class="text-muted small">{{ auth()->user()->name }}</span>
-                        <form action="{{ route('logout') }}" method="POST" class="mb-0">
+                        <form novalidate action="{{ route('logout') }}" method="POST" class="mb-0">
                             @csrf
                             <button type="submit" class="btn btn-dark btn-sm fw-bold">Cerrar sesión</button>
                         </form>
@@ -92,7 +94,28 @@
         </script>
         @endif
         @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '{{ session('error') }}'
+                });
+            });
+        </script>
+        @endif
+        @if ($errors->any())
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const errors = @json($errors->all());
+                const html = '<ul class="text-start mb-0">' + errors.map(e => '<li>' + e + '</li>').join('') + '</ul>';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: html
+                });
+            });
+        </script>
         @endif
         @yield('content')
     </main>
@@ -113,24 +136,43 @@
             buttonsStyling: false
         });
 
+        document.querySelectorAll('.edit-form').forEach(function (form) {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: '¿Estas seguro de que quieres guardar los cambios?',
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: 'Guardar',
+                    denyButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    } else if (result.isDenied) {
+                        Swal.fire('Se cancelaron los cambios', '', 'info');
+                    }
+                });
+            });
+        });
+
         document.querySelectorAll('.delete-form').forEach(function (form) {
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 swalWithBootstrapButtons.fire({
-                    title: '¿Estás seguro?',
+                    title: '¿Estas seguro de que quieres eliminar el registro?',
                     text: 'Esta acción no se puede deshacer.',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Sí, eliminar',
-                    cancelButtonText: 'No, cancelar',
-                    reverseButtons: true
+                    confirmButtonText: 'Confirmar',
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: false
                 }).then((result) => {
                     if (result.isConfirmed) {
                         form.submit();
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                         swalWithBootstrapButtons.fire({
                             title: 'Cancelado',
-                            text: 'El registro no fue eliminado.',
+                            text: 'No se elimino el registro',
                             icon: 'error'
                         });
                     }

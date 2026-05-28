@@ -1,4 +1,4 @@
-﻿@extends('layouts.glamping')
+@extends('layouts.glamping')
 
 @section('content')
 <div class="container mt-5">
@@ -9,19 +9,10 @@
                     <h4 class="mb-0">Editar Cliente</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('clientes.update', $cliente->id_cliente) }}" method="POST">
+                    <form novalidate action="{{ route('clientes.update', $cliente->id_cliente) }}" method="POST" class="edit-form">
                         @csrf
                         @method('PUT')
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                         <div class="mb-3">
                             <label for="id_persona" class="form-label">Persona</label>
                             <select class="form-select" id="id_persona" name="id_persona">

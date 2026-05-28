@@ -25,7 +25,7 @@
                                     <td>{{ $categoria->nombre }}</td>
                                     <td>
                                         <a class="btn btn-warning px-3" href="{{ route('categorias.edit', $categoria->id_categoria) }}">Editar</a>
-                                        <form action="{{ route('categorias.destroy', $categoria->id_categoria) }}" method="POST" style="display:inline;" class="delete-form">
+                                        <form novalidate action="{{ route('categorias.destroy', $categoria->id_categoria) }}" method="POST" style="display:inline;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger px-3">Eliminar</button>

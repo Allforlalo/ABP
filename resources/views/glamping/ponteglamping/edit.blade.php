@@ -1,10 +1,10 @@
-﻿@extends('glamping.layout')
+@extends('glamping.layout')
 
 @section('content')
     <h2 class="mb-3">Editar Registro Ponteglamping</h2>
     <div class="card bg-dark text-white">
         <div class="card-body">
-            <form action="{{ route('ponteglamping.update', $ponteglamping->glamping) }}" method="POST">
+            <form novalidate action="{{ route('ponteglamping.update', $ponteglamping->glamping) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">

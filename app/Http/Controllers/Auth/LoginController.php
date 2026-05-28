@@ -27,7 +27,7 @@ class LoginController extends Controller
                 return redirect()->route('dashboard');
             }
 
-            return redirect()->route('pedidos.index');
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors([

@@ -9,32 +9,24 @@
                     <h4 class="mb-0">Registrar Pedido</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('pedidos.store') }}" method="POST">
+                    <form novalidate action="{{ route('pedidos.store') }}" method="POST">
                         @csrf
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+
                         <div class="mb-3">
-                            <label for="id_cliente" class="form-label">Cliente</label>
-                            <select class="form-select" id="id_cliente" name="id_cliente">
-                                <option value="">Seleccionar cliente</option>
-                                @foreach($clientes as $cliente)
-                                    <option value="{{ $cliente->id_cliente }}" {{ old('id_cliente') == $cliente->id_cliente ? 'selected' : '' }}>
-                                        {{ $cliente->nombre }} {{ $cliente->apellido_paterno }}
+                            <label class="form-label">Detalle de Pedido</label>
+                            <select class="form-select" name="id_detalle">
+                                <option value="">Seleccionar pedido</option>
+                                @foreach($detalles as $detalle)
+                                    <option value="{{ $detalle->id_detalle }}" {{ old('id_detalle') == $detalle->id_detalle ? 'selected' : '' }}>
+                                        #{{ $detalle->id_detalle }} &mdash; {{ $detalle->nombre }} {{ $detalle->apellido_paterno }} &mdash; {{ $detalle->producto }} x{{ $detalle->cantidad }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="id_empleado" class="form-label">Empleado</label>
-                            <select class="form-select" id="id_empleado" name="id_empleado">
+                            <label class="form-label">Empleado</label>
+                            <select class="form-select" name="id_empleado">
                                 <option value="">Seleccionar empleado</option>
                                 @foreach($empleados as $empleado)
                                     <option value="{{ $empleado->id_empleado }}" {{ old('id_empleado') == $empleado->id_empleado ? 'selected' : '' }}>
@@ -44,8 +36,8 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="fecha_hora" class="form-label">Fecha y Hora</label>
-                            <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" value="{{ old('fecha_hora') }}">
+                            <label class="form-label">Fecha y Hora</label>
+                            <input type="datetime-local" class="form-control" name="fecha_hora" min="{{ now()->format('Y-m-d') }}T00:00" value="{{ old('fecha_hora') }}">
                         </div>
                         <div class="d-flex justify-content-between mt-3">
                             <a href="{{ route('pedidos.index') }}" class="btn btn-secondary">Cancelar</a>

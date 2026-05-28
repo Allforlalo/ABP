@@ -1,10 +1,10 @@
-﻿@extends('glamping.layout')
+@extends('glamping.layout')
 
 @section('content')
     <h2 class="mb-3">Nuevo Registro Ponteglamping</h2>
     <div class="card bg-dark text-white">
         <div class="card-body">
-            <form action="{{ route('ponteglamping.store') }}" method="POST">
+            <form novalidate action="{{ route('ponteglamping.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">Glamping</label>

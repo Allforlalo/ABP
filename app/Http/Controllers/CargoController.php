@@ -21,10 +21,10 @@ class CargoController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nombre' => 'required|string|max:100|unique:glamping.cargos,nombre',
+            'nombre' => 'required|string|max:100|unique:glamping.cargos,nombre|regex:/^[\pL\s]+$/u',
         ]);
         Cargo::create($validated);
-        return redirect()->route('cargos.index')->with('success', 'Cargo creado correctamente');
+        return redirect()->route('cargos.index')->with('success', 'Nuevo cargo creado');
     }
 
     public function show(string $id)
@@ -43,16 +43,20 @@ class CargoController extends Controller
     {
         $cargo = Cargo::findOrFail($id);
         $validated = $request->validate([
-            'nombre' => 'required|string|max:100|unique:glamping.cargos,nombre,' . $id . ',id_cargo',
+            'nombre' => 'required|string|max:100|unique:glamping.cargos,nombre,' . $id . ',id_cargo|regex:/^[\pL\s]+$/u',
         ]);
         $cargo->update($validated);
-        return redirect()->route('cargos.index')->with('success', 'Cargo actualizado correctamente');
+        return redirect()->route('cargos.index')->with('success', 'Cargo actualizado');
     }
 
     public function destroy(string $id)
     {
         $cargo = Cargo::findOrFail($id);
-        $cargo->delete();
-        return redirect()->route('cargos.index')->with('success', 'Cargo eliminado correctamente');
+        try {
+            $cargo->delete();
+            return redirect()->route('cargos.index')->with('success', 'Cargo eliminado');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('cargos.index')->with('error', 'No se puede eliminar: hay empleados asignados a este cargo.');
+        }
     }
 }

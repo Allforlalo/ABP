@@ -6,28 +6,16 @@
         <div class="col-md-6">
             <div class="card shadow-lg">
                 <div class="card-header bg-dark text-warning text-center">
-                    <h4 class="mb-0">Registrar Tarjeta</h4>
+                    <h4 class="mb-0">Nueva Tarjeta</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('tarjetas.store') }}" method="POST">
+                    <form novalidate action="{{ route('tarjetas.store') }}" method="POST" class="edit-form">
                         @csrf
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+
                         <div class="mb-3">
-                            <label for="numero_tarjeta" class="form-label">Número de Tarjeta</label>
-                            <input type="text" class="form-control" id="numero_tarjeta" name="numero_tarjeta" value="{{ old('numero_tarjeta') }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_persona" class="form-label">Titular</label>
-                            <select class="form-select" id="id_persona" name="id_persona">
+                            <label class="form-label">Persona</label>
+                            <select class="form-select" name="id_persona">
                                 <option value="">Seleccionar persona</option>
                                 @foreach($personas as $persona)
                                     <option value="{{ $persona->id_persona }}" {{ old('id_persona') == $persona->id_persona ? 'selected' : '' }}>
@@ -37,8 +25,12 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="id_tipo" class="form-label">Tipo de Tarjeta</label>
-                            <select class="form-select" id="id_tipo" name="id_tipo">
+                            <label class="form-label">Número de Tarjeta</label>
+                            <input type="text" class="form-control" name="numero_tarjeta" pattern="\d{13,19}" minlength="13" maxlength="19" inputmode="numeric" title="Solo dígitos, entre 13 y 19 caracteres" value="{{ old('numero_tarjeta') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Tarjeta</label>
+                            <select class="form-select" name="id_tipo">
                                 <option value="">Seleccionar tipo</option>
                                 @foreach($tiposTarjeta as $tipo)
                                     <option value="{{ $tipo->id_tipo }}" {{ old('id_tipo') == $tipo->id_tipo ? 'selected' : '' }}>
@@ -48,8 +40,8 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="id_banco" class="form-label">Banco</label>
-                            <select class="form-select" id="id_banco" name="id_banco">
+                            <label class="form-label">Banco</label>
+                            <select class="form-select" name="id_banco">
                                 <option value="">Seleccionar banco</option>
                                 @foreach($bancos as $banco)
                                     <option value="{{ $banco->id_banco }}" {{ old('id_banco') == $banco->id_banco ? 'selected' : '' }}>

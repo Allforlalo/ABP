@@ -1,4 +1,4 @@
-﻿@extends('layouts.glamping')
+@extends('layouts.glamping')
 
 @section('content')
 <div class="container mt-5">
@@ -9,19 +9,10 @@
                     <h4 class="mb-0">Editar Persona</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('personas.update', $persona->id_persona) }}" method="POST">
+                    <form novalidate action="{{ route('personas.update', $persona->id_persona) }}" method="POST" class="edit-form">
                         @csrf
                         @method('PUT')
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre', $persona->nombre) }}">
@@ -36,7 +27,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="ine" class="form-label">INE</label>
-                            <input type="text" class="form-control" id="ine" name="ine" value="{{ old('ine', $persona->ine) }}">
+                            <input type="text" class="form-control" id="ine" name="ine" pattern="[a-zA-Z0-9]{18}" maxlength="18" title="Exactamente 18 caracteres alfanuméricos" value="{{ old('ine', $persona->ine) }}">
                         </div>
                         <div class="d-flex justify-content-between mt-3">
                             <a href="{{ route('personas.index') }}" class="btn btn-secondary">Cancelar</a>

@@ -5,7 +5,7 @@
     <div class="col-md-8">
         <h3 class="mb-3">Información de Pago</h3>
         <div class="card p-3">
-            <form action="{{ route('ventas.store') }}" method="POST">
+            <form novalidate action="{{ route('ventas.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Nombre completo" name="nombre">

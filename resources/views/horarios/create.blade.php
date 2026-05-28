@@ -1,4 +1,4 @@
-﻿@extends('layouts.glamping')
+@extends('layouts.glamping')
 
 @section('content')
 <div class="container mt-5">
@@ -9,18 +9,9 @@
                     <h4 class="mb-0">Registrar Horario</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('horarios.store') }}" method="POST">
+                    <form novalidate action="{{ route('horarios.store') }}" method="POST">
                         @csrf
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                         <div class="mb-3">
                             <label for="hora_entrada" class="form-label">Hora de Entrada</label>
                             <input type="time" class="form-control" id="hora_entrada" name="hora_entrada" value="{{ old('hora_entrada') }}">

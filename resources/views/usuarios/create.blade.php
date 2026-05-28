@@ -9,17 +9,8 @@
                     <h4 class="mb-0">Nueva Cuenta</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('usuarios.store') }}" method="POST">
+                    <form novalidate action="{{ route('usuarios.store') }}" method="POST">
                         @csrf
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul class="mb-0">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
                         <div class="mb-3">
                             <label class="form-label">Nombre</label>
                             <input type="text" name="nombre" class="form-control" value="{{ old('nombre') }}">

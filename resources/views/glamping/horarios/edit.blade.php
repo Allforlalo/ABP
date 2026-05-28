@@ -1,10 +1,10 @@
-﻿@extends('glamping.layout')
+@extends('glamping.layout')
 
 @section('content')
     <h2 class="mb-3">Editar Horario</h2>
     <div class="card bg-dark text-white">
         <div class="card-body">
-            <form action="{{ route('horarios.update', $horario->id_horario) }}" method="POST">
+            <form novalidate action="{{ route('horarios.update', $horario->id_horario) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">

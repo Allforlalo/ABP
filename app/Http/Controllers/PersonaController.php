@@ -49,7 +49,7 @@ class PersonaController extends Controller
             'nombre'           => 'required|string|max:100',
             'apellido_paterno' => 'required|string|max:100',
             'apellido_materno' => 'required|string|max:100',
-            'ine'              => 'required|string|max:20|unique:glamping.personas,ine,' . $id . ',id_persona',
+            'ine'              => 'required|alpha_num|size:18|unique:glamping.personas,ine,' . $id . ',id_persona',
         ]);
         $persona->update($validated);
         return redirect()->route('personas.index')->with('success', 'Persona actualizada correctamente');
@@ -58,7 +58,11 @@ class PersonaController extends Controller
     public function destroy(string $id)
     {
         $persona = Persona::findOrFail($id);
-        $persona->delete();
-        return redirect()->route('personas.index')->with('success', 'Persona eliminada correctamente');
+        try {
+            $persona->delete();
+            return redirect()->route('personas.index')->with('success', 'Persona eliminada correctamente');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('personas.index')->with('error', 'No se puede eliminar: la persona tiene registros asociados (cliente, empleado o tarjeta).');
+        }
     }
 }

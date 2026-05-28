@@ -76,7 +76,11 @@ class ClienteController extends Controller
     public function destroy(string $id)
     {
         $cliente = Cliente::findOrFail($id);
-        $cliente->delete();
-        return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente');
+        try {
+            $cliente->delete();
+            return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('clientes.index')->with('error', 'No se puede eliminar: el cliente tiene pedidos o tarjetas registradas.');
+        }
     }
 }

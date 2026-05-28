@@ -1,4 +1,4 @@
-﻿@extends('layouts.glamping')
+@extends('layouts.glamping')
 
 @section('content')
 <div class="container mt-5">
@@ -9,21 +9,12 @@
                     <h4 class="mb-0">Registrar Cargo</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('cargos.store') }}" method="POST">
+                    <form novalidate action="{{ route('cargos.store') }}" method="POST">
                         @csrf
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}">
+                            <input type="text" class="form-control" id="nombre" name="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+" title="Solo letras y espacios" value="{{ old('nombre') }}">
                         </div>
                         <div class="d-flex justify-content-between mt-3">
                             <a href="{{ route('cargos.index') }}" class="btn btn-secondary">Cancelar</a>

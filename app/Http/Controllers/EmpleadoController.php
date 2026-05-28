@@ -88,7 +88,11 @@ class EmpleadoController extends Controller
     public function destroy(string $id)
     {
         $empleado = Empleado::findOrFail($id);
-        $empleado->delete();
-        return redirect()->route('empleados.index')->with('success', 'Empleado eliminado correctamente');
+        try {
+            $empleado->delete();
+            return redirect()->route('empleados.index')->with('success', 'Empleado eliminado correctamente');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('empleados.index')->with('error', 'No se puede eliminar: el empleado tiene pedidos registrados.');
+        }
     }
 }

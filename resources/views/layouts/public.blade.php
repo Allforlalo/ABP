@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PonteGlamping</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
 
@@ -22,6 +23,9 @@
                     <li class="nav-item">
                         <a class="nav-link fw-bold text-dark" href="{{ route('instalaciones') }}">Instalaciones</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-dark" href="{{ route('mis_pedidos.cliente') }}">Mis Pedidos</a>
+                    </li>
                 </ul>
                 <div class="d-flex align-items-center gap-2">
                     @if(!Route::is('home'))
@@ -34,6 +38,30 @@
     </nav>
 
     <main class="flex-grow-1">
+        @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: "{{ session('success') }}",
+                    icon: "success",
+                    draggable: true
+                });
+            });
+        </script>
+        @endif
+        @if ($errors->any())
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const errors = @json($errors->all());
+                const html = '<ul class="text-start mb-0">' + errors.map(e => '<li>' + e + '</li>').join('') + '</ul>';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: html
+                });
+            });
+        </script>
+        @endif
         @yield('content')
     </main>
 

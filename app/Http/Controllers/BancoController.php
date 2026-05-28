@@ -21,7 +21,7 @@ class BancoController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nombre' => 'required|string|max:100|unique:glamping.bancos,nombre',
+            'nombre' => 'required|string|max:100|unique:glamping.bancos,nombre|regex:/^[\pL\s]+$/u',
         ]);
         Banco::create($validated);
         return redirect()->route('bancos.index')->with('success', 'Banco creado correctamente');
@@ -43,7 +43,7 @@ class BancoController extends Controller
     {
         $banco = Banco::findOrFail($id);
         $validated = $request->validate([
-            'nombre' => 'required|string|max:100|unique:glamping.bancos,nombre,' . $id . ',id_banco',
+            'nombre' => 'required|string|max:100|unique:glamping.bancos,nombre,' . $id . ',id_banco|regex:/^[\pL\s]+$/u',
         ]);
         $banco->update($validated);
         return redirect()->route('bancos.index')->with('success', 'Banco actualizado correctamente');
@@ -52,7 +52,11 @@ class BancoController extends Controller
     public function destroy(string $id)
     {
         $banco = Banco::findOrFail($id);
-        $banco->delete();
-        return redirect()->route('bancos.index')->with('success', 'Banco eliminado correctamente');
+        try {
+            $banco->delete();
+            return redirect()->route('bancos.index')->with('success', 'Banco eliminado correctamente');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('bancos.index')->with('error', 'No se puede eliminar: hay tarjetas asociadas a este banco.');
+        }
     }
 }

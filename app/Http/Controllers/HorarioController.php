@@ -54,7 +54,11 @@ class HorarioController extends Controller
     public function destroy(string $id)
     {
         $horario = Horario::findOrFail($id);
-        $horario->delete();
-        return redirect()->route('horarios.index')->with('success', 'Horario eliminado correctamente');
+        try {
+            $horario->delete();
+            return redirect()->route('horarios.index')->with('success', 'Horario eliminado correctamente');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('horarios.index')->with('error', 'No se puede eliminar: hay empleados asignados a este horario.');
+        }
     }
 }
